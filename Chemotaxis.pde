@@ -5,7 +5,9 @@
 boolean predatorMode = false;
 int r;
 int changeColor = 5;
-Player Me = new Player();
+int playerX = 200;
+int playerY = 200;
+Player Me;
 //declare bacteria variables here
 Bacteria [] Amoeba = new Bacteria[50];
 void setup()
@@ -16,6 +18,7 @@ void setup()
 	{
 		Amoeba[i] = new Bacteria((int)(Math.random()*399)+1, (int)(Math.random()*399)+1);
 	}
+	Me = new Player(playerX, playerY);
 	//Amoeba = new Bacteria(200,200);
 }
 void draw()
@@ -47,7 +50,7 @@ void draw()
  			{
  				Amoeba[i].myStroke -= changeColor;
  			}
- 			if(mouseX < Amoeba[i].myX+10 && mouseX > Amoeba[i].myX-10 && mouseY < Amoeba[i].myY+10 && mouseY > Amoeba[i].myY-10)
+ 			if(Me.myX < Amoeba[i].myX+10 && Me.myX > Amoeba[i].myX-10 && Me.myY < Amoeba[i].myY+10 && Me.myY > Amoeba[i].myY-10)
  			{
  				Amoeba[i].alive = false;
  			}
@@ -58,14 +61,15 @@ void draw()
  		}
  	}
  	background(r, 0, 0);
- 	//Player
- 	Me.show();
  	//move and show the bacteria
  	for(int i = 0; i < Amoeba.length; i++)
  	{
  		Amoeba[i].show();
  		Amoeba[i].walk();
  	}
+ 	//Player
+ 	Me.show();
+ 	Me.move();
  	//Amoeba.show();
  	//Amoeba.walk();
 }
@@ -132,22 +136,22 @@ class Bacteria
 	 		//Right Direction
 	 		if(mouseX < myX)
 	 		{
-	 			myX -= (int)(Math.random()*7)-3;
+	 			myX -= (int)(Math.random()*7)-4;
 	 		}
 	 		//Left Direction
 	 		if(mouseX > myX)
 	 		{
-	 			myX -= (int)(Math.random()*7)-1;
+	 			myX -= (int)(Math.random()*7)-2;
 	 		}
 	 		//Down Direction
 	 		if(mouseY < myY)
 	 		{
-	 			myY -= (int)(Math.random()*7)-3;
+	 			myY -= (int)(Math.random()*7)-4;
 	 		}
 	 		//Up Direction
 	 		if(mouseY > myY)
 	 		{
-	 			myY -= (int)(Math.random()*7)-1;
+	 			myY -= (int)(Math.random()*7)-2;
 	 		}
 	 	}
  		//Unbiased Random Walk
@@ -163,10 +167,10 @@ class Bacteria
 class Player
 {
 	int myX, myY;
-	Player()
+	Player(int x, int y)
 	{
-		myX = mouseX;
-		myY = mouseY;
+		myX = x;
+		myY = y;
 	}
 	void look1()
 	{
@@ -193,5 +197,24 @@ class Player
 			look1();
 		else
 			look2();
+	}
+	void move()
+	{
+		if(mouseX < myX)
+		{
+			myX -= 2;
+		}
+		if(mouseX > myX)
+		{
+			myX += 2;
+		}
+		if(mouseY < myY)
+		{
+			myY -= 2;
+		}
+		if(mouseY > myY)
+		{
+			myY += 2;
+		}
 	}
 }
