@@ -5,6 +5,7 @@
 boolean predatorMode = false;
 int r;
 int changeColor = 5;
+Player Me = new Player();
 //declare bacteria variables here
 Bacteria [] Amoeba = new Bacteria[50];
 void setup()
@@ -46,7 +47,7 @@ void draw()
  			{
  				Amoeba[i].myStroke -= changeColor;
  			}
- 			if(mouseX == Amoeba[i].myX && mouseY == Amoeba[i].myY)
+ 			if(mouseX < Amoeba[i].myX+10 && mouseX > Amoeba[i].myX-10 && mouseY < Amoeba[i].myY+10 && mouseY > Amoeba[i].myY-10)
  			{
  				Amoeba[i].alive = false;
  			}
@@ -57,6 +58,8 @@ void draw()
  		}
  	}
  	background(r, 0, 0);
+ 	//Player
+ 	Me.show();
  	//move and show the bacteria
  	for(int i = 0; i < Amoeba.length; i++)
  	{
@@ -129,22 +132,22 @@ class Bacteria
 	 		//Right Direction
 	 		if(mouseX < myX)
 	 		{
-	 			myX -= (int)(Math.random()*5)-3;
+	 			myX -= (int)(Math.random()*7)-3;
 	 		}
 	 		//Left Direction
 	 		if(mouseX > myX)
 	 		{
-	 			myX -= (int)(Math.random()*5)-1;
+	 			myX -= (int)(Math.random()*7)-1;
 	 		}
 	 		//Down Direction
 	 		if(mouseY < myY)
 	 		{
-	 			myY -= (int)(Math.random()*5)-3;
+	 			myY -= (int)(Math.random()*7)-3;
 	 		}
 	 		//Up Direction
 	 		if(mouseY > myY)
 	 		{
-	 			myY -= (int)(Math.random()*5)-1;
+	 			myY -= (int)(Math.random()*7)-1;
 	 		}
 	 	}
  		//Unbiased Random Walk
@@ -156,4 +159,39 @@ class Bacteria
  		}
  		*/
  	}
+}
+class Player
+{
+	int myX, myY;
+	Player()
+	{
+		myX = mouseX;
+		myY = mouseY;
+	}
+	void look1()
+	{
+		noStroke();
+		fill(255, 0, 0);
+		rectMode(CENTER);
+		rect(myX, myY, 20, 20);
+	}
+	void look2()
+	{
+		noStroke();
+		fill(0);
+		ellipse(myX, myY, 10, 10);
+		ellipse(myX-3, myY-5, 10, 10);
+		ellipse(myX+3, myY-5, 10, 10);
+		ellipse(myX-6, myY, 10, 10);
+		ellipse(myX+6, myY, 10, 10);
+		ellipse(myX-3, myY+5, 10, 10);
+		ellipse(myX+3, myY+5, 10, 10);
+	}
+	void show()
+	{
+		if(predatorMode == false)
+			look1();
+		else
+			look2();
+	}
 }
