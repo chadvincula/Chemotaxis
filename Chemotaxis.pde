@@ -1,7 +1,3 @@
- ////////////////Starting different direction variables!
-
-
-
 boolean predatorMode = false;
 int r;
 int changeColor = 5;
@@ -9,17 +5,17 @@ int playerX = 200;
 int playerY = 200;
 Player Me;
 //declare bacteria variables here
-Bacteria [] Amoeba = new Bacteria[50];
+Bacteria [] Amoeba = new Bacteria[50];;
 void setup()
 {
 	//initialize bacteria variables here
 	size(400, 400);
+	background(r, 0, 0);
  	for(int i = 0; i < Amoeba.length; i++)
 	{
 		Amoeba[i] = new Bacteria((int)(Math.random()*399)+1, (int)(Math.random()*399)+1);
 	}
 	Me = new Player(playerX, playerY);
-	//Amoeba = new Bacteria(200,200);
 }
 void draw()
 {
@@ -60,7 +56,9 @@ void draw()
  			r -= changeColor;
  		}
  	}
- 	background(r, 0, 0);
+ 	//background(r, 0, 0);
+ 	fill(r, 0, 0, 50);
+ 	rect(200, 200, 400, 400);
  	//move and show the bacteria
  	for(int i = 0; i < Amoeba.length; i++)
  	{
@@ -70,8 +68,6 @@ void draw()
  	//Player
  	Me.show();
  	Me.move();
- 	//Amoeba.show();
- 	//Amoeba.walk();
 }
 void mousePressed()
 {
@@ -86,7 +82,6 @@ class Bacteria
  	//lots of java!
  	int myX, myY, myColor, myStroke;
  	boolean alive;
- 	//int [] direction;
  	Bacteria(int x, int y)
  	{
  		myX = x;
@@ -94,7 +89,6 @@ class Bacteria
  		myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
  		myStroke = 0;
  		alive = true;
- 		//direction = {0, 1, 2, 3, 4, 5, 6, 7};
  	}
  	void show()
  	{
@@ -154,14 +148,6 @@ class Bacteria
 	 			myY -= (int)(Math.random()*7)-2;
 	 		}
 	 	}
- 		//Unbiased Random Walk
- 		/*
- 		else
- 		{
- 			myX += (int)(Math.random()*5)-2;
- 			myY += (int)(Math.random()*5)-2;
- 		}
- 		*/
  	}
 }
 class Player
@@ -218,3 +204,9 @@ class Player
 		}
 	}
 }
+/*
+class Test
+{
+	int startX, startY, endX, endY;
+}
+*/
