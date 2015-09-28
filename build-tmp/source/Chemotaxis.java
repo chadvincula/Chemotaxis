@@ -22,6 +22,7 @@ int playerY = 200;
 Player Me;
 //declare bacteria variables here
 Bacteria [] Amoeba = new Bacteria[50];;
+
 public void setup()
 {
 	//initialize bacteria variables here
@@ -30,9 +31,11 @@ public void setup()
  	for(int i = 0; i < Amoeba.length; i++)
 	{
 		Amoeba[i] = new Bacteria((int)(Math.random()*399)+1, (int)(Math.random()*399)+1);
+		Amoeba[i].myPopulation += 1;
 	}
 	Me = new Player(playerX, playerY);
 }
+
 public void draw()
 {
 	//Predator Mode
@@ -72,19 +75,20 @@ public void draw()
  			r -= changeColor;
  		}
  	}
- 	//background(r, 0, 0);
  	fill(r, 0, 0, 50);
  	rect(200, 200, 400, 400);
+ 	//Player
+ 	Me.show();
+ 	Me.move();
  	//move and show the bacteria
  	for(int i = 0; i < Amoeba.length; i++)
  	{
  		Amoeba[i].show();
  		Amoeba[i].walk();
+ 		//text(Amoeba[i].myPopulation, 10, 390);
  	}
- 	//Player
- 	Me.show();
- 	Me.move();
 }
+
 public void mousePressed()
 {
  	//redraw();
@@ -93,10 +97,11 @@ public void mousePressed()
  	else
  		predatorMode = false;
 }
+
 class Bacteria
 {
  	//lots of java!
- 	int myX, myY, myColor, myStroke;
+ 	int myX, myY, myColor, myStroke, myPopulation;
  	boolean alive;
  	Bacteria(int x, int y)
  	{
@@ -104,6 +109,7 @@ class Bacteria
  		myY = y;
  		myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
  		myStroke = 0;
+ 		myPopulation = 0;
  		alive = true;
  	}
  	public void show()
@@ -166,6 +172,7 @@ class Bacteria
 	 	}
  	}
 }
+
 class Player
 {
 	int myX, myY;
@@ -220,12 +227,6 @@ class Player
 		}
 	}
 }
-/*
-class Test
-{
-	int startX, startY, endX, endY;
-}
-*/
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "Chemotaxis" };
     if (passedArgs != null) {
